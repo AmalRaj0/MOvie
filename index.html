@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVIE NAME</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 border border-1 border-black w-25 mt-5">
+            <input id="mtitle" class="form-control w-100 mt-3" type="text">
+            <button onclick="search()" id="" class="btn btn-primary w-100 mt-3">Enter</button>
+            <div>
+<h3 id="mname"></h3>
+<p class="fw-medium" id="mplot" ></p>
+<p class="fw-medium" id="mdirect"></p>
+<p class="fw-medium" id="mact"></p>
+<p class="fw-medium" id="mrate"></p>
+            </div>
+        </div>
+        <div class="col-4"></div>
+      </div>
+    <script>  
+    async function getmoviedeatils(){
+        try{
+            x=mtitle.value
+          res=await fetch(`https://www.omdbapi.com/?apikey=287cc024&t=${x}`)
+        data = await res.json()
+        return data
+        }catch(error){
+console.error(error);
+console.log("error:",error);
+        }
+    } 
+    async function search(){
+        moviedetail= await getmoviedeatils()
+        console.log(moviedetail);
+        mname.innerHTML=`${moviedetail.Title}(${moviedetail.Year})`
+        mplot.innerHTML=`<span class="fw-bold">PLOT:</span>${moviedetail.Plot}`
+        mdirect.innerHTML=`<span class="fw-bold">DIRECTOR:</span>${moviedetail.Director}`
+        mact.innerHTML=`<span class="fw-bold">ACTORS:</span>${moviedetail.Actors}`
+        mrate.innerHTML=`<span class="fw-bold">RATINGS:</span>${moviedetail.imdbRating}`
+
+    }
+    getmoviedeatils()
+
+
+    </script>
+</body>
+</html>
